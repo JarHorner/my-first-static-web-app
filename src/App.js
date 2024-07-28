@@ -32,6 +32,8 @@ function App() {
     };
 
     const endpoint = "/data-api/rest/Customer/CustomerID";
+
+    console.log('Preparing to send update request...');
     try {
       const response = await fetch(`${endpoint}/${id}`, {
         method: "PATCH",
@@ -41,6 +43,8 @@ function App() {
         },
         body: JSON.stringify(data),
       });
+
+      console.log('Request sent. Awaiting response...');
 
       if (!response.ok) {
         // Handle server errors
