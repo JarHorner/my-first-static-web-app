@@ -34,7 +34,7 @@ function App() {
     const endpoint = "/data-api/rest/Customer/CustomerID";
     try {
       const response = await fetch(`${endpoint}/${id}`, {
-        method: "PUT",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           // "Authorization": "Bearer your_token" // Uncomment if authorization is needed
