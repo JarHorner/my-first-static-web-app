@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { fetchData } from './apiService';
 
 function App() {
   const [data, setData] = useState("");
@@ -9,6 +10,13 @@ function App() {
       setData(text);
     })();
   });
+
+  useEffect(() => {
+    fetchData()
+      .then((data) => setData(data))
+      .catch((error) => console.error('Error fetching data:', error));
+  }, []);
+
 
   async function list() {
     const endpoint = "/data-api/rest/Customer";
@@ -28,12 +36,12 @@ function App() {
   async function update() {
     const id = 1;
     const data = {
-      FirstName: "David"
+      FirstName: "David",
     };
 
     const endpoint = "/data-api/rest/Customer/CustomerID";
 
-    console.log('Preparing to send update request...');
+    console.log("Preparing to send update request...");
     try {
       const response = await fetch(`${endpoint}/${id}`, {
         method: "PATCH",
@@ -44,7 +52,7 @@ function App() {
         body: JSON.stringify(data),
       });
 
-      console.log('Request sent. Awaiting response...');
+      console.log("Request sent. Awaiting response...");
 
       if (!response.ok) {
         // Handle server errors
@@ -127,6 +135,14 @@ function App() {
         <button id="delete" onclick={del}>
           Delete
         </button>
+      </div>
+      <div className="App">
+        <h1>Data from API</h1>
+        <ul>
+          {data.map((item, index) => (
+            <li key={index}>{item.name}</li>
+          ))}
+        </ul>
       </div>
     </>
   );
