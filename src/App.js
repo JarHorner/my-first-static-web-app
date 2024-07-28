@@ -25,21 +25,22 @@ function App() {
     console.table(result.value);
   }
 
-  // async function update() {
-  //   const id = 1;
-  //   const data = {
-  //     FirstName: "Molly",
-  //   };
+  async function update() {
+    const id = 1;
+    const data = {
+      Title: "Mrs.",
+      FirstName: "Molly",
+    };
 
-  //   const endpoint = "/data-api/rest/Customer/Id";
-  //   const response = await fetch(`${endpoint}/${id}`, {
-  //     method: "PUT",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify(data),
-  //   });
-  //   const result = await response.json();
-  //   console.table(result.value);
-  // }
+    const endpoint = "/data-api/rest/Customer/CustomerID";
+    const response = await fetch(`${endpoint}/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    const result = await response.json();
+    console.table(result.value);
+  }
 
   // async function create() {
   //   const data = {
@@ -98,13 +99,13 @@ function App() {
         <button id="get" onClick={get}>
           Get
         </button>
-        {/*<button id="update" onclick={update()}>
+        <button id="update" onclick={update}>
           Update
         </button>
-        <button id="create" onclick={create()}>
+        {/*<button id="create" onclick={create}>
           Create
         </button>
-        <button id="delete" onclick={del()}>
+        <button id="delete" onclick={del}>
           Delete
         </button> */}
       </div>
