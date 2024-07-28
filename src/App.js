@@ -17,13 +17,13 @@ function App() {
     console.table(data.value);
   }
 
-  // async function get() {
-  //   const id = 1;
-  //   const endpoint = `/data-api/rest/Customer/CustomerId`;
-  //   const response = await fetch(`${endpoint}/${id}`);
-  //   const result = await response.json();
-  //   console.table(result.value);
-  // }
+  async function get() {
+    const id = 1;
+    const endpoint = `/data-api/rest/Customer/CustomerID`;
+    const response = await fetch(`${endpoint}/${id}`);
+    const result = await response.json();
+    console.table(result.value);
+  }
 
   // async function update() {
   //   const id = 1;
@@ -95,10 +95,10 @@ function App() {
         <button id="list" onClick={list}>
           List
         </button>
-        {/*<button id="get" onClick={get}>
+        <button id="get" onClick={get}>
           Get
         </button>
-       <button id="update" onclick={update()}>
+        {/*<button id="update" onclick={update()}>
           Update
         </button>
         <button id="create" onclick={create()}>
