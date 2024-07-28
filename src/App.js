@@ -33,13 +33,29 @@ function App() {
     };
 
     const endpoint = "/data-api/rest/Customer/CustomerID";
-    const response = await fetch(`${endpoint}/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    const result = await response.json();
-    console.table(result.value);
+    try {
+      const response = await fetch(`${endpoint}/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          // "Authorization": "Bearer your_token" // Uncomment if authorization is needed
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        // Handle server errors
+        const errorMessage = `Error: ${response.status} ${response.statusText}`;
+        console.error(errorMessage);
+        throw new Error(errorMessage);
+      }
+
+      const result = await response.json();
+      console.table(result.value);
+    } catch (error) {
+      // Handle network or other errors
+      console.error("Failed to update the customer:", error);
+    }
   }
 
   // async function create() {
