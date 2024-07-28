@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { fetchData } from './apiService';
 
 function App() {
-  const [data, setData] = useState("");
+  const [data, setData] = useState([]);
 
-  useEffect(() => {
-    (async function () {
-      const { text } = await (await fetch(`/api/message`)).json();
-      setData(text);
-    })();
-  });
+  // useEffect(() => {
+  //   (async function () {
+  //     const { text } = await (await fetch(`/api/message`)).json();
+  //     setData(text);
+  //   })();
+  // });
 
   useEffect(() => {
     fetchData()
@@ -113,7 +113,7 @@ function App() {
 
   return (
     <>
-      <div>{data}</div>
+      {/* <div>{data}</div> */}
       <h1>Static Web Apps Database Connections</h1>
       <blockquote>
         Open the console in the browser developer tools to see the API
@@ -126,13 +126,13 @@ function App() {
         <button id="get" onClick={get}>
           Get
         </button>
-        <button id="update" onclick={update}>
+        <button id="update" onClick={update}>
           Update
         </button>
-        <button id="create" onclick={create}>
+        <button id="create" onClick={create}>
           Create
         </button>
-        <button id="delete" onclick={del}>
+        <button id="delete" onClick={del}>
           Delete
         </button>
       </div>
