@@ -35,7 +35,7 @@
       "permissions": [
         {
           "actions": ["*"],
-          "role": "admin"
+          "role": "anonymous"
         }
       ]
     },
@@ -44,7 +44,7 @@
       "permissions": [
         {
           "actions": ["*"],
-          "role": "admin"
+          "role": "anonymous"
         }
       ]
     },
@@ -53,7 +53,7 @@
       "permissions": [
         {
           "actions": ["*"],
-          "role": "admin"
+          "role": "anonymous"
         }
       ]
     }
