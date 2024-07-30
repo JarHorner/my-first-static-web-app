@@ -1,73 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { fetchData } from './apiService';
+import { fetchCustomers, updateCustomerFirstName } from "./apiService";
 
 function App() {
-  const [data, setData] = useState([]);
-
-  // useEffect(() => {
-  //   (async function () {
-  //     const { text } = await (await fetch(`/api/message`)).json();
-  //     setData(text);
-  //   })();
-  // });
+  const [customers, setCustomers] = useState([]);
+  const [sortBy, setSortBy] = useState("FirstName");
+  const [order, setOrder] = useState("asc");
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const [newFirstName, setNewFirstName] = useState("");
+  const [customerIdToUpdate, setCustomerIdToUpdate] = useState("");
 
   useEffect(() => {
-    fetchData()
-      .then((data) => setData(data))
-      .catch((error) => console.error('Error fetching data:', error));
-  }, []);
+    fetchCustomers(sortBy, order, page, limit)
+      .then((data) => {
+        setCustomers(data);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, [sortBy, order, page, limit]);
 
-
-  async function list() {
-    const endpoint = "/data-api/rest/Customer";
-    const response = await fetch(endpoint);
-    const data = await response.json();
-    console.table(data.value);
-  }
-
-  async function get() {
-    const id = 1;
-    const endpoint = `/data-api/rest/Customer/CustomerID`;
-    const response = await fetch(`${endpoint}/${id}`);
-    const result = await response.json();
-    console.table(result.value);
-  }
-
-  async function update() {
-    const id = 1;
-    const data = {
-      FirstName: "David",
-    };
-
-    const endpoint = "/data-api/rest/Customer/CustomerID";
-
-    console.log("Preparing to send update request...");
-    try {
-      const response = await fetch(`${endpoint}/${id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          // "Authorization": "Bearer your_token" // Uncomment if authorization is needed
-        },
-        body: JSON.stringify(data),
-      });
-
-      console.log("Request sent. Awaiting response...");
-
-      if (!response.ok) {
-        // Handle server errors
-        const errorMessage = `Error: ${response.status} ${response.statusText}`;
-        console.error(errorMessage);
-        throw new Error(errorMessage);
-      }
-
-      const result = await response.json();
-      console.table(result.value);
-    } catch (error) {
-      // Handle network or other errors
-      console.error("Failed to update the customer:", error);
+  const updateFirstName = () => {
+    if (!customerIdToUpdate || !newFirstName) {
+      alert("Please provide a customer ID and a new first name");
+      return;
     }
-  }
+
+    updateCustomerFirstName(customerIdToUpdate, newFirstName);
+  };
 
   async function create() {
     const data = {
@@ -113,36 +71,38 @@ function App() {
 
   return (
     <>
-      {/* <div>{data}</div> */}
       <h1>Static Web Apps Database Connections</h1>
-      <blockquote>
-        Open the console in the browser developer tools to see the API
-        responses.
-      </blockquote>
       <div>
-        <button id="list" onClick={list}>
-          List
+        <button onClick={() => setSortBy("FirstName")}>Sort by Name</button>
+        <button onClick={() => setOrder(order === "asc" ? "desc" : "asc")}>
+          {order === "asc" ? "Ascending" : "Descending"}
         </button>
-        <button id="get" onClick={get}>
-          Get
-        </button>
-        <button id="update" onClick={update}>
-          Update
-        </button>
-        <button id="create" onClick={create}>
-          Create
-        </button>
-        <button id="delete" onClick={del}>
-          Delete
-        </button>
-      </div>
-      <div className="App">
-        <h1>Data from API</h1>
         <ul>
-          {data.map((item, index) => (
-            <li key={index}>{item.name}</li>
+          {customers.map((customer) => (
+            <li key={customer.CustomerID}>{customer.FirstName}</li>
           ))}
         </ul>
+        <button onClick={() => setPage(page + 1)}>Next Page</button>
+        <button onClick={() => setPage(page > 1 ? page - 1 : 1)}>
+          Previous Page
+        </button>
+      </div>
+
+      <div>
+        <h2>Update Customer First Name</h2>
+        <input
+          type="text"
+          placeholder="Customer ID"
+          value={customerIdToUpdate}
+          onChange={(e) => setCustomerIdToUpdate(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="New First Name"
+          value={newFirstName}
+          onChange={(e) => setNewFirstName(e.target.value)}
+        />
+        <button onClick={updateFirstName}>Update First Name</button>
       </div>
     </>
   );
