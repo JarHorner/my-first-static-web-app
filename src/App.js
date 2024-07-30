@@ -27,48 +27,6 @@ function App() {
     updateCustomerFirstName(customerIdToUpdate, newFirstName);
   };
 
-  async function create() {
-    const data = {
-      CustomerID: 161,
-      NameStyle: false,
-      Title: "Mr.",
-      FirstName: "Jarret",
-      MiddleName: "A.",
-      LastName: "Horner",
-      Suffix: null,
-      CompanyName: "Winners",
-      SalesPerson: "adventure-works\\pamela0",
-      EmailAddress: "jarret0@Winners.com",
-      Phone: "245-555-0173",
-      PasswordHash: "L/Rlwxzp4w7RWmEgXX+/A7cXaePEPcp+KwQhl2fJL7w=",
-      PasswordSalt: "1KjXYs4=",
-      rowguid: "3F5AE95E-B87D-4AED-95B4-C3797AFCB74F",
-      ModifiedDate: "2005-08-01T00:00:00",
-    };
-
-    const endpoint = `/data-api/rest/Customer/`;
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    const result = await response.json();
-    console.table(result.value);
-  }
-
-  async function del() {
-    const id = 161;
-    const endpoint = "/data-api/rest/Customer/CustomerID";
-    const response = await fetch(`${endpoint}/${id}`, {
-      method: "DELETE",
-    });
-    if (response.ok) {
-      console.log(`Record deleted: ${id}`);
-    } else {
-      console.log(response);
-    }
-  }
-
   return (
     <>
       <h1>Static Web Apps Database Connections</h1>
@@ -86,6 +44,11 @@ function App() {
         <button onClick={() => setPage(page > 1 ? page - 1 : 1)}>
           Previous Page
         </button>
+        <ul>
+          <li onClick={() => setLimit(10)}>10</li>
+          <li onClick={() => setLimit(15)}>15</li>
+          <li onClick={() => setLimit(20)}>20</li>
+        </ul>
       </div>
 
       <div>
