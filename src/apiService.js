@@ -5,12 +5,14 @@ export const fetchCustomers = async (sortBy, order, page, limit) => {
     page: page.toString(),
     limit: limit.toString(),
   }).toString();
+
   const response = await fetch(
     `https://my-first-node-web-app.azurewebsites.net/customers/?${queryParams}`
   ).catch((error) => console.error("Error updating customer:", error));
-  //   const response = await fetch(
-  //     `http://localhost:3005/customers?${queryParams}`
-  //   ).catch((error) => console.error("Error updating customer:", error));
+
+    // const response = await fetch(
+    //   `http://localhost:3005/customers?${queryParams}`
+    // ).catch((error) => console.error("Error updating customer:", error));
 
   const data = await response.json();
   console.log(data);
@@ -26,7 +28,7 @@ export const updateCustomerFirstName = async (id, firstName) => {
           "Content-Type": "application/json",
           // "Authorization": "Bearer your_token" // Uncomment if authorization is needed
         },
-        body: JSON.stringify( {FirstName: firstName} )
+        body: JSON.stringify( {firstName: firstName} )
       }
     ).catch((error) => console.error("Error updating customer:", error));
 
