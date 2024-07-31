@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const TEST_API_URL = "http://localhost:3005";
+//const TEST_API_URL = "http://localhost:3005";
 const PROD_API_URL = "https://my-first-node-web-app.azurewebsites.net";
 
 const api = axios.create({
