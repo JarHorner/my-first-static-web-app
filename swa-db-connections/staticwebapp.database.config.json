@@ -39,17 +39,8 @@
         }
       ]
     },
-    "Product": {
-      "source": "SalesLT.Product",
-      "permissions": [
-        {
-          "actions": ["*"],
-          "role": "anonymous"
-        }
-      ]
-    },
-    "ProductModel": {
-      "source": "SalesLT.ProductModel",
+    "Users": {
+      "source": "dbo.Users",
       "permissions": [
         {
           "actions": ["*"],
