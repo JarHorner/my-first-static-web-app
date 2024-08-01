@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Customer from "./components/Customer";
 import Home from "./components/Home";
+import Register from "./components/Register";
 
 const AppContent = () => {
   const { loading } = useContext(AuthContext);
@@ -16,6 +17,7 @@ const AppContent = () => {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
       <Route
         path="/customer"
         element={

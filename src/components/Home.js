@@ -12,6 +12,26 @@ const Home = () => {
         <Link to="/login" style={styles.link}>
           Login
         </Link>
+        <Link to="/register" style={styles.link}>
+          Register
+        </Link>
+      </div>
+      <div>
+        <ul>
+          <li>
+            <a href="/anonymous/">All users can access this page</a>
+          </li>
+          <li>
+            <a href="/authenticated/">
+              All authenticated users can access this page
+            </a>
+          </li>
+          <li>
+            <a href="/admin/">
+              Only users in the admin custom role can access this page
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
   );

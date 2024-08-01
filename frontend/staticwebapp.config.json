@@ -1,0 +1,49 @@
+{
+  "auth": {
+    "rolesSource": "/api/GetRoles",
+    "identityProviders": {
+      "azureActiveDirectory": {
+        "userDetailsClaim": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name",
+        "registration": {
+          "openIdIssuer": "https://login.microsoftonline.com/88a03020-9225-4775-b29c-c7b7acd9b8f8",
+          "clientIdSettingName": "ENTRA_CLIENT_ID",
+          "clientSecretSettingName": "ENTRA_CLIENT_SECRET"
+        },
+        "login": {
+          "loginParameters": ["resource=https://graph.microsoft.com"]
+        }
+      }
+    }
+  },
+  "routes": [
+    {
+      "route": "/admin/*",
+      "allowedRoles": ["admin"]
+    },
+    {
+      "route": "/authenticated/*",
+      "allowedRoles": ["authenticated"]
+    },
+    {
+      "route": "/customer",
+      "allowedRoles": ["admin"]
+    },
+    {
+      "route": "/logout",
+      "redirect": "/.auth/logout"
+    }
+  ],
+  "responseOverrides": {
+    "401": {
+      "redirect": "/login",
+      "statusCode": 302
+    }
+  },
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/images/*.{png,jpg,gif}", "/css/*"]
+  },
+  "globalHeaders": {
+    "Cache-Control": "no-cache"
+  }
+}

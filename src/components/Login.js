@@ -2,13 +2,20 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { login as apiLogin } from "../services/api";
 import { AuthContext } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const { logout } = useContext(AuthContext);
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  async function getUserInfo() {
+    const response = await fetch("/.auth/me");
+    const user = await response.json();
+    console.log(user);
+  }
 
   const handleLogout = () => {
     logout();
@@ -16,10 +23,10 @@ const Login = () => {
     alert("Successfully logged out");
   };
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const data = await apiLogin(username, password);
+      const data = await apiLogin(email, password);
       login(data.token);
       navigate("/customer");
     } catch (error) {
@@ -29,13 +36,13 @@ const Login = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleLogin}>
         <div>
-          <label>Username</label>
+          <label>Email</label>
           <input
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
         </div>
@@ -51,6 +58,20 @@ const Login = () => {
         <button type="submit">Login</button>
       </form>
       <button onClick={handleLogout}>Logout</button>
+      <div>
+        <a href="/.auth/login/aab">Login</a>
+        <a href="/.auth/logout">Log out</a>
+      </div>
+
+      <div>
+        <button onClick={getUserInfo}>get logged in user info</button>
+      </div>
+
+      <div>
+      <Link to="/register">
+          Register
+        </Link>
+      </div>
     </>
   );
 };

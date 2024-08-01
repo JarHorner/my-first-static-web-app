@@ -1,10 +1,10 @@
 import axios from "axios";
 
-//const TEST_API_URL = "http://localhost:3005";
-const PROD_API_URL = "https://my-first-node-web-app.azurewebsites.net";
+const TEST_API_URL = "http://localhost:3005";
+//const PROD_API_URL = "https://my-first-node-web-app.azurewebsites.net";
 
 const api = axios.create({
-  baseURL: PROD_API_URL,
+  baseURL: TEST_API_URL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -21,8 +21,13 @@ api.interceptors.request.use((config) => {
   return Promise.reject(error);
 });
 
-export const login = async (username, password) => {
-  const response = await api.post('/auth/login', {username, password});
+export const register = async (username, email, password) => {
+  const response = await api.post('auth/register', {username, email, password});
+  return response.data;
+}
+
+export const login = async (email, password) => {
+  const response = await api.post('/auth/login', {email, password});
   return response.data;
 }
 
